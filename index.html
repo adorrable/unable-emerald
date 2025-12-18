@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AfricAgro — Africa Agriculture Landing</title>
+  <style>
+    :root{
+      --bg: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --primary: #0a8f4a; /* Africa-inspired green */
+      --accent: #f57c1b;  /* warm orange */
+      --card: #ffffff;
+      --shadow: 0 8px 20px rgba(0,0,0,.05);
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,Segoe UI, Roboto, Inter, Arial, sans-serif;}
+    a{color:inherit;text-decoration:none}
+    img{max-width:100%;display:block}
+
+    /* NAV */
+    .nav{
+      position: sticky; top:0; z-index: 50;
+      display:flex;align-items:center;justify-content:space-between;
+      padding:14px 22px;background:#fff;border-bottom:1px solid #eee;
+    }
+    .logo{display:flex;align-items:center;gap:10px}
+    .logo-mark{width:34px;height:34px;border-radius:8px;background:linear-gradient(135deg, var(--primary), #4caf50);display:inline-flex;align-items:center;justify-content:center;color:white;font-weight:700}
+    .logo-text{font-weight:700;letter-spacing:.2px}
+    .nav-items{display:flex;gap:14px;}
+    .nav-item{border:0;background:transparent;padding:10px 14px;border-radius:8px;cursor:default;color:#374151}
+    .hamburger{display:none;border:0;background:transparent;font-size:22px;cursor:pointer}
+
+    /* HERO */
+    .hero{display:grid;grid-template-columns:1.1fr 0.9fr;gap:40px;align-items:center;padding:64px 6vw 40px}
+    .hero h1{font-size: clamp(2rem, 2.4vw + 1rem, 3.25rem);line-height:1.08;margin:0 0 14px}
+    .hero p{color:var(--muted);font-size:1.05rem;margin:0 0 20px;max-width:65ch}
+    .cta-row{display:flex;gap:14px;flex-wrap:wrap;margin-top:6px}
+    .btn{border:0;background:#111; color:#fff;padding:12px 18px;border-radius:999px;cursor:default;font-weight:600;box-shadow:0 2px 0 rgba(0,0,0,.04)}
+    .btn.primary{background:var(--primary)}
+    .btn.secondary{background:#f1f5f9;color:#0f172a}
+
+    .hero-visual{position:relative;min-height:320px;border-radius:20px;overflow:hidden;box-shadow:var(--shadow);border:1px solid #eee}
+    .hero-visual img{width:100%;height:100%;object-fit:cover;display:block}
+
+    /* PATTERN BACKGROUND */
+    .pattern{position:absolute;inset:0;background-size: cover;opacity:.08;pointer-events:none}
+
+    /* SECTIONS */
+    section{padding:60px 6vw;}
+    .section-title{font-size:1.75rem;margin:0 0 12px}
+    .section-sub{color:var(--muted);margin:0 0 28px}
+    .grid{display:grid;gap:20px;grid-template-columns:repeat(3,1fr)}
+    .card{background:var(--card);border-radius:14px;padding:18px;box-shadow:var(--shadow);border:1px solid #f0f0f0}
+    .card h3{margin:6px 0 8px;font-size:1.05rem}
+    .card p{color:var(--muted);font-size:.95rem}
+    .card img{border-radius:10px;margin-bottom:8px}
+
+    /* ABOUT / STORY */
+    .about{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+    .about p{color:#374151;line-height:1.6}
+
+    /* TESTIMONIALS */
+    .testimonials{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+    .quote{padding:16px;border-left:4px solid var(--primary);background:#fff;border-radius:8px;}
+    .avatar{width:40px;height:40px;border-radius:50%;background:#e5e7eb;display:inline-flex;align-items:center;justify-content:center;font-weight:700;color:#374151;margin-right:8px}
+
+    /* FOOTER */
+    footer{border-top:1px solid #eee;padding:28px 6vw;background:#fff;}
+    .footer-grid{display:flex;flex-wrap:wrap;gap:20px;justify-content:space-between;align-items:center}
+    .foot-note{color:var(--muted);font-size:.9rem}
+    .footer-actions{display:flex;gap:10px;align-items:center}
+    .footer-btn{border:0;background:#25D366;color:white;padding:8px 12px;border-radius:999px;cursor:default;font-size:.9rem}
+
+    /* FLOATING WHATSAPP BUTTON */
+    .fab{position:fixed;right:22px;bottom:22px;width:58px;height:58px;border-radius:50%;border:none;background:#25D366;box-shadow:0 8px 20px rgba(0,0,0,.15);cursor:default;display:flex;align-items:center;justify-content:center}
+    .fab svg{width:28px;height:28px;fill:white}
+    .fab-label{position:absolute;right:72px;bottom:26px;background:#111;color:#fff;padding:6px 10px;border-radius:999px;font-size:.8rem;white-space:nowrap;opacity:.0;transition:opacity .2s}
+    .fab:hover + .fab-label{opacity:1}
+
+    /* RESPONSIVE */
+    @media (max-width: 1024px){
+      .hero{grid-template-columns:1fr;gap:20px}
+      .hero-visual{height:300px}
+      .pattern{opacity:.12}
+    }
+    @media (max-width: 800px){
+      .nav-items{display:none}
+      .hamburger{display:block}
+      .grid{grid-template-columns:1fr 1fr}
+      .about{grid-template-columns:1fr}
+      .testimonials{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <!-- NAV -->
+  <nav class="nav" aria-label="Main Navigation">
+    <div class="logo" title="AfricAgro">
+      <div class="logo-mark" aria-label="Logo">A</div>
+      <div class="logo-text" style="font-weight:800">AfricAgro</div>
+    </div>
+    <div class="nav-items" role="navigation">
+      <button class="nav-item" aria-label="Home">Home</button>
+      <button class="nav-item" aria-label="Solutions">Solutions</button>
+      <button class="nav-item" aria-label="Stories">Stories</button>
+      <button class="nav-item" aria-label="Testimonials">Testimonials</button>
+      <button class="nav-item" aria-label="About">About</button>
+      <button class="nav-item" aria-label="Contact">Contact</button>
+    </div>
+    <button class="hamburger" aria-label="Open menu">☰</button>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero" id="top">
+    <div class="hero-copy">
+      <p style="color:var(--muted);margin:0 0 10px">Empowering Africa's farmers with sustainable tools, market access, and community support.</p>
+      <h1>Grow, Thrive, and Prosper: Africa’s Agriculture, Empowered by Community and Technology</h1>
+      <p>We connect smallholder farmers to knowledge, markets, and resources with a human-centered approach that honors African diversity, warmth, and resilience.</p>
+      <div class="cta-row">
+        <button class="btn primary" aria-label="Order Now">Order Now</button>
+        <button class="btn secondary" aria-label="Learn More">Learn More</button>
+      </div>
+    </div>
+    <div class="hero-visual" aria-label="Hero visual">
+      <img src="https://im.runware.ai/image/ws/2/ii/87fb207e-5d0e-4c04-a37e-f2063441b099.jpg" alt="Hero illustration of African farmers in a field" />
+      <div class="pattern" style="background-image:url("https://im.runware.ai/image/ws/2/ii/c52dbfde-fb96-4b80-b5da-c3622c804acf.jpg//);"></div>
+    </div>
+  </header>
+
+  <!-- FEATURES -->
+  <section aria-label="Features" style="background:#fff;">
+    <h2 class="section-title" style="text-align:center">What we offer</h2>
+    <p class="section-sub" style="text-align:center">Practical tools and services designed for farmers, cooperatives, and agribusinesses across Africa.</p>
+    <div class="grid" style="margin-top:8px">
+      <article class="card" aria-label="Feature 1">
+        <img src="https://im.runware.ai/image/ws/2/ii/ee5af945-484b-4095-89aa-b7f67a2fdaf5.jpg" alt="Sustainable farming practices" style="height:180px;object-fit:cover;border-radius:10px" />
+        <h3>Smart Inputs & Insights</h3>
+        <p>Weather data, soil health, and crop recommendations delivered to farmers’ phones for better decisions.</p>
+      </article>
+      <article class="card" aria-label="Feature 2">
+        <img src="https://im.runware.ai/image/ws/2/ii/b8a30796-68b9-4a1f-b52d-615c1cae760f.jpg" alt="Market access and logistics" style="height:180px;object-fit:cover;border-radius:10px" />
+        <h3>Market Access & Pricing</h3>
+        <p>Connect with buyers, streamline sales, and secure fair prices for produce across continents.</p>
+      </article>
+      <article class="card" aria-label="Feature 3">
+        <img src="https://im.runware.ai/image/ws/2/ii/c52dbfde-fb96-4b80-b5da-c3622c804acf.jpg" alt="Community training and resources" style="height:180px;object-fit:cover;border-radius:10px" />
+        <h3>Training & Community</h3>
+        <p>Coaching, peer learning, and resource libraries to uplift farming communities.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ABOUT / STORY -->
+  <section aria-label="About the project" class="about">
+    <div>
+      <h2 class="section-title">Our Story</h2>
+      <p>Born from a desire to support Africa’s farmers who power families, communities, and local economies, our platform blends digital tools with a deep respect for local knowledge. We partner with cooperatives, NGOs, and government programs to create inclusive access to technology, finance, and markets.</p>
+      <p>Our approach centers on human-centered design, cultural relevance, and sustainable farming practices that protect soil, water, and biodiversity for generations to come.</p>
+    </div>
+    <div>
+      <div class="card" style="display:flex;gap:12px;align-items:center;min-height:120px;">
+        <div class="avatar" aria-label="avatar">A</div>
+        <div>
+          <strong>Impact highlights</strong>
+          <ul style="margin:6px 0 0 18px;color:var(--muted);line-height:1.6">
+            <li>100+ farming communities engaged</li>
+            <li>Increased yield and reduced input costs</li>
+            <li>Women-led cooperatives expanding access</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section aria-label="Testimonials">
+    <h2 class="section-title" style="text-align:center">What Farmers Say</h2>
+    <p class="section-sub" style="text-align:center">Real voices from across the continent.</p>
+    <div class="testimonials" style="padding-top:8px">
+      <div class="quote" aria-label="Testimonial 1">
+        <p style="margin:0 0 8px">"This platform gave our cooperative access to buyers and real-time farming insights. Our yields are up and our community is stronger."</p>
+        <div style="display:flex;align-items:center;gap:8px;opacity:.8"><span class="avatar">M</span><span>Maria, cooperative leader</span></div>
+      </div>
+      <div class="quote" aria-label="Testimonial 2">
+        <p style="margin:0 0 8px">"The training modules helped our farmers adopt sustainable practices with confidence."</p>
+        <div style="display:flex;align-items:center;gap:8px;opacity:.8"><span class="avatar">K</span><span>Kamau, agripreneur</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CALL TO ACTION -->
+  <section aria-label="CTA" style="background:#f8fbf7;">
+    <div class="card" style="max-width:900px;margin:0 auto;display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap;padding:22px 20px;border-radius:16px;border:1px solid #eef0f2;">
+      <div>
+        <h3 style="margin:0 0 6px">Ready to grow with us?</h3>
+        <p style="margin:0;color:var(--muted);max-width:58ch">Join farmers across Africa who are accessing tools, markets, and training to transform livelihoods.</p>
+      </div>
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+        <!-- Non-functional placeholder button -->
+        <button class="btn primary" aria-label="Order Now CTA">Order Now</button>
+        <!-- WhatsApp placeholder link (region Africa) -->
+        <button class="footer-btn" aria-label="WhatsApp chat" style="background:#25D366">WhatsApp</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-grid" style="align-items:flex-start;gap:20px">
+      <div style="flex:1;min-width:260px">
+        <strong>AfricAgro</strong>
+        <p class="foot-note" style="margin-top:6px">Empowering farming communities with accessible technology and trusted networks.</p>
+      </div>
+      <div style="flex:1;min-width:260px" aria-label="Contact info">
+        <div style="margin-bottom:6px"><strong>Contact</strong></div>
+        <div class="foot-note" style="margin:0 0 6px">Email: hello@adorrable.dev</div>
+        <div class="foot-note" style="margin:0">Phone: +1 (000) 000-0000</div>
+      </div>
+      <div style="flex:1;min-width:260px" aria-label="WhatsApp contact in footer">
+        <div style="margin-bottom:6px"><strong>Chat</strong></div>
+        <button class="footer-btn" aria-label="Footer WhatsApp chat" style="background:#25D366">WhatsApp chat</button>
+      </div>
+    </div>
+    <p class="foot-note" style="text-align:center;marginTop:14px;margin-bottom:0;">made with ❤️ by adorrable.dev</p>
+  </footer>
+
+  <!-- Floating WhatsApp button (region Africa) -->
+  <button class="fab" aria-label="Chat on WhatsApp" data-href="https://wa.me/"> 
+    <!-- WhatsApp icon (SVG inline) -->
+    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-label="WhatsApp icon">
+      <path d="M20.5 3.5h-17A3.5 3.5 0 0 0 0 7v10a3.5 3.5 0 0 0 3.5 3.5h17a3.5 3.5 0 0 0 3.5-3.5V7a3.5 3.5 0 0 0-3.5-3.5zM12 18.6c-3.4 0-6.2-2.8-6.2-6.2S8.6 6.2 12 6.2s6.2 2.8 6.2 6.2-2.8 6.2-6.2 6.2zm5.6-8.6c-.2-.6-.9-1-1.6-1-1.2 0-2.2.9-2.2 2.1 0 .5.2 1 .6 1.4l-1.2 1.3c-.3.3-.4.3-.7 0-.2-.3-.2-.8.1-1.1l-.8-.8c-.7-.7-.4-1.9.5-2.6.7-.5 1.6-.7 2.4-.7.7 0 1.2.3 1.7.7.5.4.8 1 .8 1.7 0 .3-.1.7-.3.9-.2.2-.2.4 0 .6.3.3.7.5 1.1.6.2.1.5.1.7-.1.6-.5 1-1.5 1-2.4 0-.4-.1-.8-.3-1.2z"/>
+    </svg>
+  </button>
+  <div class="fab-label" aria-hidden="true">Chat on WhatsApp</div>
+
+  <!-- Optional tiny script to keep the button non-functional but ready for real link -->
+  <script>
+    // Non-functional placeholders for accessibility; this script demonstrates potential linking without navigation.
+    (function(){
+      var fab = document.querySelector('.fab');
+      if(!fab) return;
+      fab.addEventListener('click', function(){
+        // Placeholder: in production this could open a WhatsApp chat via wa.me URL.
+        console.log('WhatsApp chat placeholder clicked.');
+      });
+    })();
+  </script>
+</body>
+</html>
